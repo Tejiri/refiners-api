@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
                 "lastName" => "Ijatomi",
                 "firstName" => "Tejiri",
                 "title" => "Mr",
-                "dateOfBirth" => fake()->date(),
+                "dateOfBirth" => "23-03-2023",
                 "role" => "admin"
             ]);
         } else {
