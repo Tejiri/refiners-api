@@ -77,15 +77,17 @@ class AuthController extends Controller
     function login(Request $request)
     {
 
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // $user = ;
 
             $user = User::where('email', $request->email)->with('account')->first();
             $token =   $user->createToken('refiners-Token')->plainTextToken;
-
-            //    return $user->createToken('refiners-Token')->plainTextToken;
 
             $user->bank = Crypt::decrypt($user->bank);
             $user->accountNumber = Crypt::decrypt($user->accountNumber);
@@ -97,21 +99,6 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-
-        // $user = User::where('email', $request->email)->first();
-
-        // if (! $user || ! Hash::check($request->password, $user->password)) {
-        //     throw ValidationException::withMessages([
-        //         'email' => ['The provided credentials are incorrect.'],
-        //     ]);
-        // }
-
-        // return $user->createToken('refiners-Token')->plainTextToken;   
     }
 
     function createUserAccounts(User $user)

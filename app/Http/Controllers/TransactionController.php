@@ -135,12 +135,19 @@ class TransactionController extends Controller
     function getAllTransactions()
     {
         //orders all transactions from newest to oldest transactions
-        return Transaction::orderBy('date', 'desc')->get();
+        return response(Transaction::orderBy('date', 'desc')->get(), 200);
+    }
+
+    function getAllTransactionsByAccountType($accountType)
+    {
+        
+        //orders all transactions from newest to oldest transactions
+        return response(Transaction::orderBy('date', 'desc')->where('account',$accountType)->get(), 200);
     }
 
     function getAllTransactionsByUserId($userId)
     {
-        return Transaction::orderBy('date', 'desc')->where('userId', $userId)->get();
+        return response(Transaction::orderBy('date', 'desc')->where('userId', $userId)->get(),200);
     }
 
     function deleteTransactionsById($transactionId)
