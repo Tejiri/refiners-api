@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('nextOfKinName');
             $table->string('nextOfKinAddress');
             $table->string('nextOfKinPhoneNumber');
-            $table->string('bank')->nullable();
-            $table->string('accountNumber')->nullable();
+            $table->string('bank',255)->nullable();
+            $table->string('accountNumber',255)->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
