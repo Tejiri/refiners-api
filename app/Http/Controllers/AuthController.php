@@ -89,8 +89,15 @@ class AuthController extends Controller
             $user = User::where('email', $request->email)->with('account')->first();
             $token =   $user->createToken('refiners-Token')->plainTextToken;
 
-            $user->bank = Crypt::decrypt($user->bank);
-            $user->accountNumber = Crypt::decrypt($user->accountNumber);
+            if ($user->bank == null || $user->accountNumber == null) {
+                $user->bank = null;
+                $user->accountNumber = null;
+            } else {
+                $user->bank = Crypt::decrypt($user->bank);
+                $user->accountNumber = Crypt::decrypt($user->accountNumber);
+            }
+            
+           
             $response = [
                 "user" => $user,
                 'token' => $token
